@@ -6,6 +6,8 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras.optimizers import Adam
 import keras.backend as K
 import traceback
+import keras_metrics
+import model_plotter
 
 from T3D_keras import densenet161_3D_DropOut
 from get_video import video_gen
@@ -61,7 +63,8 @@ def train():
     # compile model
     optim = Adam(lr=1e-4, decay=1e-6)
     model.compile(optimizer=optim, loss='categorical_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=['accuracy', keras_metrics.precision(),
+                           keras_metrics.recall()])
     if os.path.exists('./T3D_saved_model_weights.hdf5'):
         print('Pre-existing model weights found, loading weights.......')
         model.load_weights('./T3D_saved_model_weights.hdf5')
@@ -83,6 +86,8 @@ def train():
         callbacks=callbacks_list,
         workers=1
     )
+    # plot the model
+    model_plotter.plot_history(history)
     model.save(MODEL_FILE_NAME)
 
 

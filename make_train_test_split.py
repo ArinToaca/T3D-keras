@@ -2,22 +2,18 @@ from random import shuffle
 import csv
 import glob
 
-action_classes = ['Fight']
-print(len(set(action_classes)))
+action_classes = ['noFights', 'fights']
 
 
 def create_csvs():
+    print("in create csvs")
     train = []
     test = []
 
     for myclass, directory in enumerate(action_classes):
-        for filename in glob.glob('UCF50/{}/*.avi'.format(directory)):
-            group = ((filename.split('/')[-1]).split('.')[0]).split('_')[-2]
-
-            if group in ['g01', 'g02', 'g02', 'g04', 'g05']:
-                test.append([filename, myclass, directory])
-            else:
-                train.append([filename, myclass, directory])
+        for filename in glob.glob('../Dataset/{}/*.avi'.format(directory)):
+            print("filename %s" % filename)
+            train.append([filename, myclass, directory])
 
     shuffle(train)
     shuffle(test)

@@ -5,7 +5,7 @@ from keras.layers import AveragePooling3D, MaxPooling3D, Dense
 from keras.layers import Flatten, GlobalAveragePooling2D
 from keras.applications import densenet
 
-__all__ = ['DenseNet3D', 'densenet121', 'densenet161']  # with DropOut
+__all__ = ['DenseNet', 'densenet121', 'densenet161']  # with DropOut
 
 
 def _DenseLayer(prev_layer, growth_rate, bn_size, drop_rate):
