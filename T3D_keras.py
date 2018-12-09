@@ -80,7 +80,7 @@ def _TTL(prev_layer):
 
 
 def DenseNet3D(input_shape, growth_rate=32, block_config=(6, 12, 24, 16),
-               num_init_features=64, bn_size=4, drop_rate=0, num_classes=5):
+               num_init_features=64, bn_size=4, drop_rate=0, num_classes=1):
     r"""Densenet-BC model class, based on
     `"Densely Connected Convolutional Networks"
     <https://arxiv.org/pdf/1608.06993.pdf>`
@@ -157,7 +157,8 @@ def DenseNet3D(input_shape, growth_rate=32, block_config=(6, 12, 24, 16),
     x = Dropout(0.5)(x)
     x = Dense(128, activation='relu')(x)
     x = Dropout(0.35)(x)
-    out = Dense(num_classes, activation='softmax')(x)
+    # sigmoid for binary prediction
+    out = Dense(num_classes, activation='sigmoid')(x)
 
     model = Model(inputs=[inp_2d, inp_3d], outputs=[out])
     model.summary()

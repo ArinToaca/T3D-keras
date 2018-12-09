@@ -45,7 +45,6 @@ def train():
         nb_classes, batch_size=BATCH_SIZE)
 
     # Get Model
-    # model = densenet121_3D_DropOut(sample_input.shape, nb_classes)
     model = densenet161_3D_DropOut(sample_input.shape, nb_classes)
 
     checkpoint = ModelCheckpoint('T3D_saved_model_weights.hdf5',
@@ -62,7 +61,7 @@ def train():
 
     # compile model
     optim = Adam(lr=1e-4, decay=1e-6)
-    model.compile(optimizer=optim, loss='categorical_crossentropy',
+    model.compile(optimizer=optim, loss='binary_crossentropy',
                   metrics=['accuracy', keras_metrics.precision(),
                            keras_metrics.recall()])
     if os.path.exists('./T3D_saved_model_weights.hdf5'):
