@@ -47,7 +47,7 @@ def train():
     # Get Model
     model = densenet161_3D_DropOut(sample_input.shape, nb_classes)
 
-    checkpoint = ModelCheckpoint('T3D_saved_model_weights.hdf5',
+    checkpoint = ModelCheckpoint('../drive/T3D_saved_model_weights.hdf5',
                                  monitor='val_loss',
                                  verbose=1, save_best_only=True, mode='min',
                                  save_weights_only=True)
@@ -64,9 +64,9 @@ def train():
     model.compile(optimizer=optim, loss='binary_crossentropy',
                   metrics=['accuracy', keras_metrics.precision(),
                            keras_metrics.recall()])
-    if os.path.exists('./T3D_saved_model_weights.hdf5'):
+    if os.path.exists('../drive/T3D_saved_model_weights.hdf5'):
         print('Pre-existing model weights found, loading weights.......')
-        model.load_weights('./T3D_saved_model_weights.hdf5')
+        model.load_weights('../drive/T3D_saved_model_weights.hdf5')
         print('Weights loaded')
 
     # train model
